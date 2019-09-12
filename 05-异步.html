@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>异步</title>
+</head>
+<body>
+    <script>
+        //回调函数：简单容易理解和部署，不利于代码维护
+        f1(f2);
+        function f1(callback){
+            setTimeout(function(){
+                callback();
+            },1000)
+        }
+
+
+        //事件监听
+        f1.on('done',f2);//为f1绑定事件
+        function f1(){
+            setTimeout(function(){
+                f1.trigger('done');
+            },1000)
+        }
+
+        //发布订阅
+        
+        //Promise
+        var promise = new Promise(function(resolve,reject){
+            if(true){
+                resolve("Success");
+            }
+            if(false){
+                reject("Error");
+            }
+        })
+
+        promise.then = (msg)=> console.log(msg);
+        promise.catch = (msg)=> console.log(msg);
+        
+        //async await
+        //generator
+    </script>
+</body>
+</html>

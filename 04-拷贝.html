@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>拷贝</title>
+</head>
+<body>
+    <a href="https://juejin.im/post/59ac1c4ef265da248e75892b">拷贝</a>
+    <script>
+        var obj = {
+            name:"Mary",
+            age:18,
+            language:{
+                city:'China'
+            }
+        }
+
+        function shallowCopy(obj){
+            var result={};
+            for(prop in obj){//遍历枚举属性
+                if(obj.hasOwnProperty(prop)){//严格限制只遍历枚举属性
+                    // result.prop = obj.prop;//通过此种方式赋值的时候，属性值不能为变量
+                    result[prop] = obj[prop];
+                }
+            }
+            return result;
+        }
+
+        function deepCopy(obj){           
+            var result={};
+            for(prop in obj){
+                if(obj.hasOwnProperty(prop)){
+                    if(typeof obj[prop] === 'object'){//判断是否为引用类型                       
+                        result[prop] = deepCopy(obj[prop]);
+                    }else{
+                        // result.prop = obj.prop;                        
+                        result[prop] = obj[prop];
+                    }
+                }
+            }
+            return result;
+        }
+
+        var obj1 = shallowCopy(obj);
+        console.log(obj1.language.city);
+        obj1.language.city = 'England';
+        console.log(obj.language.city,obj1.language.city);
+        
+        console.log("--------------");
+              
+        var obj2 = deepCopy(obj);
+        console.log(obj2.language.city);
+        obj2.language.city='France';
+        console.log(obj.language.city,obj2.language.city);
+
+        obj={
+            name:'Mary',
+            age:[1,[2,3]]
+        }
+
+        var obj3 = deepCopy(obj);
+        console.log(obj3);
+        obj3.age[1][0]=100;
+        console.log(obj,obj3);
+        
+        
+
+
+    </script>
+</body>
+</html>

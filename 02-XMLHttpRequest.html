@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>XMLHttpRequest</title>
+</head>
+<body>
+    <a href="https://www.cnblogs.com/52fhy/p/5436673.html">Content-Type</a>
+    <a href="https://blog.csdn.net/jam_yin/article/details/51837204">Content-Type&PHP</a>
+    <script>  
+        //AJAX
+        $.ajax({
+            url: 'your request url',
+            method: 'get',
+            async: true,
+            timeout: 1000,
+            data: {
+                test: 1,
+                aaa: 2
+            }
+        }).then(
+            res => console.log('请求成功: ' + res),
+            err => console.log('请求失败: ' + err)
+        )
+
+        //XMLHttpRequest
+        function ajax(){
+            return new Promise(function(resolve,reject){
+                var request = new XMLHttpRequest();
+            request.timeout = 1000;
+
+            request.open('post','Server.php', false);//是否async 创建httpQingqiu 
+            request.setRequestHeader('Connection','keep-alive');
+            // request.setRequestHeader('Content-Encoding','gzip');
+            // request.setRequestHeader('Content-Type','text/html');//.html
+            // request.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=utf-8');//数据被编码为名称/值对。这是标准的编码格式
+            // request.setRequestHeader('Content-Type','multipart/form-data');//浏览器会把整个表单以控件为单位分割，并为每个部分加上Content-Disposition(form-data或者file),Content-Type(默认为text/plain),name(控件name)等信息，并加上分割符(boundary)
+            // request.setRequestHeader('Content-Type','text/plain');//数据以纯文本形式(text/json/xml/html)进行编码，其中不含任何控件或格式字符
+            
+
+            request.ontimeout =() =>console.log('Timeout');//必须在发送请求之前
+            request.onload = () =>{
+                resolve(request.responseText);
+            }
+            request.onerror = () =>{
+                reject(response.status);
+            }
+
+            request.send(data);//发送请求
+
+            //处理请求 会被触发多次，每次readystatus改变时都被触发
+            reqest.onreadystatechange = () =>{
+                if(request.readystatus === 4){//0未发送；1建立连接；2发送成功；3接受请求头；4接受成功
+                    if(request.status >=200 && request.status<=300|| request.status==304){
+                        console.log("Success");
+                        
+                    }
+                }
+            }
+            })
+        }
+
+        var xml = ajax();
+        xml.then(function(message){
+            //message = resolve(responseText)->responseText;
+        });
+        xml.catch(function(message){
+            //message = reject(status)->status;
+        });
+
+    </script>
+</body>
+</html>

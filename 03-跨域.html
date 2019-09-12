@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>跨域</title>
+</head>
+<body>
+    <a href="https://www.sitepoint.com/jsonp-examples/">三种跨域方案</a>
+    <script>  
+        //动态添加script标签，缺点 不能接收返回参数
+        var script =$('<script .>',{
+            src:'./Relative/Server.php',
+            type:'application/json',//定义请求参数为json格式
+            data:{
+                name:'Mary',
+                age:18
+            }
+        })
+
+        $('head').appendChild(script);
+
+        //jsonp格式
+        function logResults(json){
+            console.log(json);
+            
+        }
+        $.ajax({
+            url:'Server.php',
+            dataType:'jsonp',//返回数据为jsonp格式
+            jsonpCallback:'logResults'//回掉函数
+        })
+
+
+        //jsonp type2
+        $.getJson('./Relative/Server.phpServer.php?callback=?',function(json){
+
+        })
+
+
+        //Proxy代理
+        /* proxy.php */
+        /*
+            $url = "http://run.plnkr.co/plunks/v8xyYN64V4nqCshgjKms/data-1.json";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $result = curl_exec ($ch);
+            curl_close ($ch);
+            echo $result;
+        */
+
+        //Client
+        $.getJSON("http://my-domain.com/proxy.php", function(json) {
+            console.log(json);
+        })
+
+
+        //headers
+        //Header add Access-Control-Allow-Origin "http://my-domain.com"
+
+        $.ajax({
+            url:'./Relative/Server.php',
+            dataType:jsonp,
+            jsonp:'callback',//服务器端jsonpcallback
+            data:'id=10',
+            // success:function(){
+            //     //jsonp callback
+            // }
+        })
+        .done(function(){
+
+        })
+        .fail(function(){
+
+        })
+
+        function jsonCallBack(data){
+
+        }
+
+        $.getJSON("./Relative/Server.php?callback=?",function(data){
+            console.log(data);
+        },'jsonp')
+    </script>
+    
+    <script src="./Relative/Server.php?id=1&callback=jsonpCallBack" type="text/javascript"></script>
+</body>
+</html>
+
+<?php
+
+    header('Accell-Contorl-Allow-Origin:*');
+    heaer('Content-type:application/json');
+
+    $jsondata = '{
+        "name":"Mary",
+        "age":20
+    }'
+
+    echo $_GET['callback'].'('.$jsondata.')';
+
+?>
+
+
