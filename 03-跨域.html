@@ -11,7 +11,7 @@
     <script>  
         //动态添加script标签，缺点 不能接收返回参数
         var script =$('<script .>',{
-            src:'./Relative/Server.php',
+            src:'./src/Server.php',
             type:'application/json',//定义请求参数为json格式
             data:{
                 name:'Mary',
@@ -27,14 +27,14 @@
             
         }
         $.ajax({
-            url:'Server.php',
+            url:'./src/Server.php',
             dataType:'jsonp',//返回数据为jsonp格式
             jsonpCallback:'logResults'//回掉函数
         })
 
 
         //jsonp type2
-        $.getJson('./Relative/Server.phpServer.php?callback=?',function(json){
+        $.getJson('./src/Server.phpServer.php?callback=?',function(json){
 
         })
 
@@ -61,7 +61,7 @@
         //Header add Access-Control-Allow-Origin "http://my-domain.com"
 
         $.ajax({
-            url:'./Relative/Server.php',
+            url:'./src/Server.php',
             dataType:jsonp,
             jsonp:'callback',//服务器端jsonpcallback
             data:'id=10',
@@ -80,12 +80,12 @@
 
         }
 
-        $.getJSON("./Relative/Server.php?callback=?",function(data){
+        $.getJSON("./src/Server.php?callback=?",function(data){
             console.log(data);
         },'jsonp')
     </script>
     
-    <script src="./Relative/Server.php?id=1&callback=jsonpCallBack" type="text/javascript"></script>
+    <script src="./src/Server.php?id=1&callback=jsonpCallBack" type="text/javascript"></script>
 </body>
 </html>
 
