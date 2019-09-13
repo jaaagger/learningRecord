@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>notes</title>
+</head>
+<body>
+	<script type="text/javascript">
+		// style
+		// 1.只能获取内联样式
+		// 2.可以赋值修改
+
+		// offset
+		// 1.父元素必须有定位
+		// 2.包含padding,content,border
+		// 3.offsetWidth不能被赋值，只能被获取
+
+		// client
+		// 1.包含padding,content
+
+		// scroll
+		// 1.包含content,padding
+		// 2.与client不同：client内容超出时还是原来高度，scroll为超出的内容大小
+		// 3.scrollTop包括被卷去的高度
+
+
+		// mouseover
+		// 1.鼠标经过父盒子，子盒子都会触发
+		// 2.子盒子不冒泡给父盒子
+
+		// mouseenter,mouseleave
+		// 1.鼠标经过子盒子不会触发
+		// 2.子盒子不会冒泡给父盒子，因此父盒子不会再次冒泡
+
+
+		// js动画函数的封装
+		// 1.setInterval改变元素位置
+		// 2.元素必须添加定位
+
+
+		// W3C标准是浏览器标准，规定WebAPI：浏览器提供操作BOM,DOM元素的接口
+		// ECMAScript是JS标准，规定标准的JS语法
+		// DOM：文档对象模型，W3C标准，处理可扩展语言的标准编程接口
+		// DOM树：由文档、元素、节点组成，都称为对象
+		// 文档：一个页面就是一个文档，document表示
+		// 根元素：html；元素：页面中的所有标签都是元素
+		// 节点：网页中所有内容都是节点（标签、属性、文本、注释）
+
+		// 获取元素：
+		// getElementById() 找不到返回null；注意script必须先有id的元素标签
+		// 	返回值为元素对象
+		// console.log(time)//返回标签元素
+		// console.dir(time)//返回标签元素的属性和方法
+		// getElementsByTagName()动态获取元素内容
+
+		// var div = document.createElement('div');
+		// document.body.appendChild(div);
+
+		// var divs = document.getElementsByTagName('div');
+		// console.log(divs);//1个
+		// var div1 = document.createElement('div');
+		// document.body.appendChild(div1);
+
+		// console.log(divs);//2个
+
+		// H5新增querySelector()，不区分class,id,name选择
+		// 1.返回指定选择器的第一个对象
+		// 2.querySelectorAll()返回指定选择器的所有对象
+		// 3.querySelectorAll不是动态的
+
+		// 1.获取body；属性可读写
+		// document.body
+		// 2.获取html
+		// document.documentElement
+		// 3.同一个页面多个html,只有一个document
+
+		// innerText
+		// 1.去除html标签
+		// 2.去除空格和换行
+		// 3.获取到标签时会自动删除标签
+
+		// innerHTML:识别字符串里面的标签
+		// 1.包含html标签
+		// 2.包括空格和换行
+
+		// 表单元素属性
+		// 1.type
+		// 2.value:表单内文字属性 非innerHTML
+		// 3.selected:
+		// 4.disabled
+		// 5.checked
+		// 表单样式属性
+		// 1.element.style行内样式 驼峰命名 > 内联样式权重
+		// 2.element.className内联样式
+
+		// 表单全选
+		// 排他思想
+		// checked = true
+
+		// 获取属性方式
+		// 1.element.属性
+		// 2.element.getAttribute('') 此类属性可自定义（data-index）等
+		// 3.element.setAttribute('key',value)
+		// 4.element.removeAttribute('key')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// querySelector,getElementById区别
+
+
+		// css盒模型
+
+
+		// 重绘与回流
+
+
+		// 渲染机制与js关系，js赋值时的操作
+
+
+		// MVC,MVVM
+		// MVC小程序
+		// mvvm框架Vue，双向数据绑定
+
+
+		// flask
+
+
+		// python基本特性
+
+
+		// 前端书籍
+
+
+		// 为什么喜欢前端
+
+
+		// 剑指OFFER
+
+
+		// link,import区别
+
+
+
+
+		
+
+
+
+
+
+	</script>
+</body>
+</html>
