@@ -146,10 +146,10 @@
 
 
 
-		slice()
-		splice()
-		shift()
-		unshift()
+		// slice()//截取，返回新数组，原始数组无变化
+		// splice()//删除，替换，返回被删除元素数组，改变原始数组
+		// shift()//头部插入
+		// unshift()//头部删除
 
 
 		javascript的语言特性
@@ -182,13 +182,27 @@
 		// css盒模型
 
 
-		// 重绘与回流
+		重绘与回流
+		1）重流和重绘并不一定一起发生，重流必然导致重绘，重绘不一定需要重流。
+			比如改变元素颜色，只会导致重绘，而不会导致重流；改变元素的布局，则会导致重绘和重流。
+			一次性操作：DOM/CSS
+
+		虚拟DOM：
+		1）非每次变更都更新DOM树
+		2）用 JavaScript 对象结构表示 DOM 树的结构；然后用这个树构建一个真正的 DOM 树，插到文档当中
+			当状态变更的时候，重新构造一棵新的对象树。然后用新的树和旧的树进行比较，记录两棵树差异
+			把2所记录的差异应用到步骤1所构建的真正的DOM树上，视图就更新了
+		3）Virtual DOM 本质上就是在 JS 和 DOM 之间做了一个缓存。
 
 
 		// 渲染机制与js关系，js赋值时的操作
 
 
 		// MVC,MVVM
+		MVC:
+			view -> controller -> model
+		MVVM:
+			view -> vieModel <-> model
 		// MVC小程序
 		// mvvm框架Vue，双向数据绑定
 
@@ -208,7 +222,299 @@
 		// 剑指OFFER
 
 
-		// link,import区别
+		link,import区别
+		1）link引入样式表，CSS同时加载
+		2）import只能引入样式表，页面加载完毕后再加载
+		不同的浏览器有不同的渲染引擎，Firefox浏览器为Gecko引擎，Safari为WebKit引擎，Chrome为Blink引擎。
+
+
+
+		小程序
+		1.目录结构
+		/pages：/index /logs对应不同的页面
+			index.js
+				Page({
+					data:{
+						msg:'hello'
+					},
+					rotateEvent(){
+
+					}
+				})
+			index.wxml//组件化开发
+				<view>
+					<text bindTap='rotate'> {{msg}} </text>
+				</view>
+			index.wxss//不用被引入，但是必须同名
+				CSS样式
+		/utils：util.js
+		app.js//App({ onLaunch:function(){ }; globalData:{} })
+		const app = getApp();
+		Page({
+			data:{
+
+			},
+			rotateEvent:function(){
+
+			}
+		})
+
+		App({
+			onLaunch:function(){
+
+			},
+			globalData:{
+
+			}
+
+		})
+		app.json//项目结构配置
+			{
+				"pages":[
+					"pages/index/index",
+					"pages/logs/logs"
+				],
+				"window":{
+					"backgroundTextStyle":"light",
+					"navigationBarTextStyle":"black"
+				}
+			}
+		app.wxss//全局样式
+		project.config.json// 项目配置
+			{
+				"description":'项目配置文件',
+				"setting":{
+					"urlCheck":true,
+					"es6":true
+				},
+				"libVersion":'1.9.91'
+			}
+
+		2.完美适配 rpx
+			iphone6:1rpx = 1px = 0.5csspx
+		3.框架
+			mpvue(美团开发)Vue.js in mini program
+
+			/build
+			/config
+			webpack及项目相关配置
+			/dist
+			/node_modules
+			/src
+				/datas
+				/images
+				/pages
+					/index
+						index.vue[wxml wxss]
+						main.js
+						main.json
+					/logs
+				/router
+					router.js
+						import Vue from 'vue'
+						import VueRouter from 'vue-router'
+						imprort List from '../pages/list/list.vue'
+						Vue.use(VueRouter)
+						let routes = [
+							{
+								path:'/list',
+								component:List
+							}
+						]
+						export default new VueRouter({
+							routes
+						})
+				/store 
+				app.json
+				App.vue
+				main.js
+			/static
+			index.html 
+			package.json
+			package.lock.json
+			project.config.json
+			README.md 
+		4.Vue组件间通信方式
+			1）父->子
+			2）子->父
+			3）隔代组件
+			4）兄弟
+
+			1）props
+				一般属性 父->子
+				函数属性 子->父
+			2）vue自定义事件
+				子->父
+				father:
+					<myComponent @eventName="callback">
+				son:
+					this.$emit("eventName",data)
+			3）消息订阅与发布
+				pubsub.js
+				订阅：
+					PubSub.subscribe('msg',function(msg,data){})
+					//消息名，回调函数
+				发布：
+					PubSub.publish('msg',data)
+					//消息名，data传递给回调函数
+			4）vuex插件
+				1）为Vue.js应用程序开发的状态管理的vue插件
+				2）集中式管理vue多个组件共享的状态和后台获取的数据
+				vue-components读取状态：
+					$store.state 
+					$store.dispatch()
+
+			5）slot[通信的数据为带数据的标签]
+				父->子：
+					父组件解析好的标签传递给子组件
+
+		5.MVVM实现原理
+			Vue作为MVVM模式的实现库的2种技术
+			1）模板解析
+				实现页面的初始化显示
+					大括号表达式
+					指令解析
+			2）数据绑定
+				实现更新显示
+					数据劫持
+			new MVVM()
+	Vue
+	1.搭建
+		vue init webpack demoName
+		cd demoName
+		npm run dev 
+	2.目录
+		/build[项目构建webpack相关代码]
+		/config[配置目录，跨域，端口号等]
+		/node_modules[npm的项目依赖模块]
+		/src
+			/assets[图片，logo]
+			/components[组件文件]
+			/router[路由文件]
+			App.vue[项目入口文件]
+				<template></template>
+				 <script>
+				 	export default {
+				 		name:'App'
+				 	}
+				 </script>
+				 <style></style>
+			main.js[项目核心文件]
+		/static
+		index.html[首页入口文件]
+		package.json
+		package-lock.json
+		README.md
+	3.Vue中的<template>
+		1）HTML <template> 元素是一种用于保存客户端内容的机制，该内容在页面加载时不被渲染，但可以在运行时使用 JavaScript 进行实例化。
+		2）可以将一个模板视为正在被存储以供随后在文档中使用的一个内容片段。
+		3）单组件文件
+
+虽然, 在加载页面的同时,解析器确实处理 <template>元素的内容，这样做只是确保这些内容是有效的; 然而,元素的内容不会被渲染。
+	4.v-if v-show
+		v-if create delete[切换开销，v-else-if,v-else]
+		v-show display:none display:block[渲染开销]
+	5.v-model
+		实现表单value数据的双向绑定
+	6.生命周期
+	7.小程序生命周期/区别
+	8.vue-loader
+		允许加载.vue后缀，在配置文件中
+		js可以写es6，style样式可以用less\sass等
+	9.nextTick
+		$nextTick是在下次DOM更新循环结束之后执行延迟回调，可以在回调中获取更新后的DOM
+		1）视图层数据变化，但是DOM元素未更新
+		2）VUE是异步更新，等同一事件循环中的所有数据变化完成之后，再统一进行视图更新
+		3）因此console.log()打印之后才会进行视图更新
+	10.vue路由
+		
+	11.$ref
+		1）用在元素上，可以获取元素实例
+		2）用在子组件上，可以使用子组件的所有方法
+	12.vue加载顺序
+		1）index.html
+		2）main.js，引入app.vue，生成vue实例
+		3）app.vue，全局组件，所有子组件的父组件
+		4）index.js，路由
+	13.父子组件的渲染顺序
+		父组件先开始，子组件先结束
+		父组件在两边，子组件在中间
+		1）加载渲染过程
+			父beforeCreate->父created->父beforeMount->子beforeCreate->子created->子beforeMount->子mounted->父mounted
+		2）子组件更新过程
+			父beforeUpdate->子beforeUpdate->子updated->父updated
+		3）父组件更新过程
+			父beforeUpdate->父updated
+		4）销毁过程
+			父beforeDestroy->子beforeDestroy->子destroyed->父destroyed
+
+	14.axios与ajax区别
+		1）axios
+			底层使用node.js
+			支持Promise
+			客户端支持防止CSRF
+			提供了并发的接口
+		2）ajax
+			针对MVC编程
+			基于原声XHR开发
+			需要引入整个jQuery
+		3）fetch
+			更加底层，提供丰富的API request。response
+			脱离XHR
+	12.ajax请求type
+
+	13.http响应码
+		200：请求成功
+		300：重定向
+		400：客户端参数/语义有误
+		404：客户端请求资源未在服务器上
+		405：客户端请求方法不被允许
+		500：服务器不知道如何处理
+		501：服务器不支持请求方法
+		502：网关错误
+		503：服务器维护/忙碌
+		505：服务器不支持HTTP协议版本
+	14.http请求头
+		Accept
+		Accept-Language
+		Content-Language
+		Last-Event-ID
+		Content-Type：只限于三个值application/x-www-form-urlencoded、multipart/form-data、text/plain
+
+		GET /cors HTTP/1.1
+		Origin: http://api.bob.com
+		Host: api.alice.com
+		Accept-Language: en-US
+		Connection: keep-alive
+		User-Agent: Mozilla/5.0...
+	15.http返回头
+		Access-Control-Allow-Origin: http://api.bob.com
+		Access-Control-Allow-Credentials: true
+		Access-Control-Expose-Headers: FooBar
+		Content-Type: text/html; charset=utf-8
+	16.组件注册方式
+		1）全局注册
+		2）局部注册
+	17.懒加载
+		1）将资源的src放在其余属性中
+		2）当图片将要出现在可视区域时，将src赋值为资源路径
+	18.CSRF
+		1）验证HTTP Referer字段
+		HTTP头中有一个Referer字段，这个字段用以标明请求来源于哪个地址。在处理敏感数据请求时，通常来说，Referer字段应和请求的地址位于同一域名下。以上文银行操作为例，Referer字段地址通常应该是转账按钮所在的网页地址，应该也位于www.examplebank.com之下。而如果是CSRF攻击传来的请求，Referer字段会是包含恶意网址的地址，不会位于www.examplebank.com之下，这时候服务器就能识别出恶意的访问。
+	19.node.js
+		基于Chrome V8引擎的JS运行环境
+		1）事件驱动
+		2）非阻塞
+	20.get post区别
+
+	21.操作系统的进程状态
+		就绪  ->  执行  ->  阻塞  ->  就绪
+		   进程调度   I/O请求	   I/O完成
+	22.域名，跨域/一级域名，二级域名
+
+
+
+
 
 
 
