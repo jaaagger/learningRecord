@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>排序</title>
+</head>
+<body>
+	<script type="text/javascript">
+		// 简单排序:冒泡->选择->插入
+		// 高级排序:希尔->快排(首选)
+		// 封装在ArrayList当中,构造函数
+		function ArrayList(){
+			this.array = [];
+			ArrayList.prototype.insert = function(item){
+				this.array.push(item);
+			}
+
+			ArrayList.prototype.toString = function(){
+				return this.array.join('-')
+			}
+
+			ArrayList.prototype.constructor = function(arr){
+				this.array = arr;
+			}
+
+			//冒泡 O(n^2) O(1)
+			// 两两依次比较交换位置,找出最大的放在末尾
+			// 1.从头到尾依次比较相邻两个元素
+			// 2.将大的元素放在后面,小元素放在前面
+			// 3.右移,比较后面元素大小;此时最大的放在末尾
+			// 4.从第一个元素重新开始,找出次大元素
+			ArrayList.prototype.bubbleSort = function(){
+				let length = this.array.length;
+				for(let j = 1; j <= length-1 ; j++){
+					for(let i = 0; i < length-j ; i++){
+						if(this.array[i]>this.array[i+1]){
+							[this.array[i],this.array[i+1]] = [this.array[i+1],this.array[i]]
+							//解构赋值
+						}
+					}
+				}
+				
+			}
+
+			//选择 O(n^2) O(1)
+			// 每次记录出最小值的位置,并将最小值与第0个元素交换位置
+			// 1.选定第0个位置为最小值,从[0,n-1]中找到最小的,与第0个位置的元素交换位置
+			// 2.选定第1个位置为最小值,从[1,n-1]中找到最小的,与第1个位置的元素交换位置
+			// 3.选定第n-2个位置为最小值,从[n-2,n-1]中找到最小的,与第n-2个元素交换位置
+			ArrayList.prototype.selectionSort = function(){
+				let length = this.array.length;
+
+				for(let j = 0; j <= length-2 ; j++){
+					let min = this.array[j];
+					let index = j;
+					for(let i = j+1; i < length ; i++){
+						if(this.array[i] < min){
+							min = this.array[i];
+							index = i;
+						}
+					}
+					// console.log(min);
+					[this.array[j],this.array[index]] = [this.array[index],this.array[j]]
+				}
+
+			}
+
+			//插入 O(n^2) O(1)
+			// 局部有序,记录位置的左边都比a小,记录位置的右边都比a大
+			// 1.未排序序列中取出一个,与已排序序列中的元素从后往前比较
+			// 2.如果已排序中的被比较元素大于该未排序元素,已排序元素向后移动一位
+			// 3.如果已排序中的被比较元素小于该未排序元素,该未排序元素插入到已排序元素后面
+			// 4.最初以第一个元素为已排序元素
+
+			ArrayList.prototype.insertionSort = function(){
+				let length = this.array.length;
+				for(let i = 1; i < length; i++){
+					let elem = this.array[i];//当前需要插入的元素
+					// for(let j=i-1; j>=0;j--){
+					// 	if(this.array[j]>elem){
+					// 		this.array[j+1] = this.array[j];
+					// 	}
+					// 	this.array[j]
+					// }
+					//不确定比较几次,因此用while循环
+					let j = i-1;
+					while(this.array[j] && this.array[j]>elem){
+						this.array[j+1] = this.array[j];
+						j--;
+					}
+					this.array[j+1] = elem;
+					//j=0时也满足
+				}
+			}
+
+			//希尔 通常小于O(n^2) O(1)
+			// 1.对插入排序的改进,减少比较的次数(局部排序+局部有序)
+			// 2.设置间隔为5(中间4个数)的局部排序
+			// 3.设置间隔为3
+			// 4.间隔为1时,再进行插入排序(此时的移动次数会减少)
+			ArrayList.prototype.shellSort = function(){
+				let length = this.array.length;
+				let gap = Math.floor(length/2);
+				//计算间隔量
+				while(gap>=1){
+					//分别对分组进行排序
+					for(let i = gap; i<length; i++){//从每组的第2个元素开始,与第一个元素比较
+						// i i-gap元素比较
+						let elem = this.array[i];
+						let j = i-gap;
+						while(this.array[j] && this.array[j]>elem){
+							this.array[j+gap] = this.array[j];
+							j = j-gap;
+						}
+						this.array[j+gap] = elem;
+					}
+					gap = Math.floor(gap/2);
+				}
+			}
+
+			//快速
+			// 1.对冒泡排序的改进
+			// 2.效率通常非常高
+			// 3.选中一个标准值a,比a小的数字放在左边,比a大的数字放在右边
+			// 4.递归排序
+			// 5.枢纽尽量靠近中间
+			ArrayList.prototype.median = function(left, rignt){//头、中、尾三个数字进行交换
+				let mid = Math.floor((left+right)/2);
+				
+				//三个数排序 
+				if(this.array[left] > this.array[mid]){
+					[this.array[left],this.array[mid]] = [this.array[mid],this.array[left]]
+				}
+				if(this.array[mid] > this.array[rihgt]){
+					[this.array[mid],this.array[right]] = [this.array[right],this.array[mid]]
+				}
+				if(this.array[left] > this.array[right]){
+					[this.array[left],this.array[right]] = [this.array[right],this.array[left]]
+				}
+
+				//将mid换到right-1的位置
+				[this.array[mid],this.array[right-1]] = [this.array[right-1],this.array[mid]]
+
+			}
+
+		}
+
+		Array.prototype.quickSort = function (){
+			let length = this.length;
+			if(length < 1){
+				return this
+			}
+			// 先将枢纽选择出来并放在最左边
+			let left = 0;
+			let right = length-1;
+
+			//将所有小于mid的数字放在左边
+			//将所有大于等于mid的数字放在右边
+
+			while(left < right){
+				while(this[right]>=this[0] && left<right){
+					right--;
+				}
+				while(this[left]<=this[0] && left<right){
+					left++;
+				}
+				if(left<right){
+					[this[left],this[right]] = [this[right],this[left]];
+				}else if(left == right){
+					[this[left],this[0]] = [this[0],this[left]];
+				}						
+			}
+			//需要将原数组元素替换为排序后的元素
+			
+			this.slice(0,left).quickSort();
+			this.slice(left+1,length).quickSort();
+		
+		}
+
+		function quickSort(arr){
+			let length = arr.length;
+			if(length < 2){
+				return arr
+			}
+
+			let left = 0;//此时left不能为1，如果只有两个数字此时不参与循环交换无法排序
+			let right = length-1;
+			let elem = arr[0];//以左边元素为基准
+
+			//如果左侧指针先移动，最后可能会指向末尾元素，此时交换有可能出错
+			//如果右侧指针先移动，最后可能会指向第0个元素，此时交换不会出错
+
+			while(left < right){//不能包含=，如果有=号则两侧均不移动，一直处在交换状态，此时没有退出循环的条件
+				while(arr[right] >= elem && left < right){//如果没有=号，则右侧指针可能一直不移动
+					right--;
+				}
+				while(arr[left] <= elem && left  < right){//如果没有=号，则左侧是真可能一直不移动
+					left++;
+				}
+				//右侧指针移动停止：1）left未移动与初始位置重合 2）找到比elem小的位置
+				//left停止位置： 1）left未移动与right重合；可以交换 2）left碰到了right,此时arr[right]肯定比elem小；可以交换
+				
+				if(left == right){//退出循环的条件
+					[arr[left],arr[0]] = [arr[0],arr[left]]
+
+				}else if(left < right){
+					[arr[left],arr[right]] = [arr[right],arr[left]]
+				}
+			}
+			//退出循环，此时left==right且已交换完毕
+			return quickSort(arr.slice(0,left)).concat(arr.slice(left,left+1)).concat(quickSort(arr.slice(left+1,length)));
+		}
+
+		var arr=[5,6,2,9,3,8,4,7,1];
+		// console.log(quickSort(arr));
+		var sortedArr = quickSort(arr)
+		console.log(sortedArr);
+
+		var list = new ArrayList();
+		list.insert(6);
+		list.insert(12);
+		list.insert(88);
+		list.insert(23);
+		list.insert(56);
+		list.insert(5);
+		// console.log(list);
+
+		// list.bubbleSort();
+		// list.selectionSort();
+		// list.insertionSort();
+		// list.shellSort();
+		// console.log(list);
+
+
+			
+	</script>
+</body>
+</html>

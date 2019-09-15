@@ -23,6 +23,7 @@
 		// 3.scrollTop包括被卷去的高度
 
 
+
 		// mouseover
 		// 1.鼠标经过父盒子，子盒子都会触发
 		// 2.子盒子不冒泡给父盒子
@@ -32,9 +33,11 @@
 		// 2.子盒子不会冒泡给父盒子，因此父盒子不会再次冒泡
 
 
+
 		// js动画函数的封装
 		// 1.setInterval改变元素位置
 		// 2.元素必须添加定位
+
 
 
 		// W3C标准是浏览器标准，规定WebAPI：浏览器提供操作BOM,DOM元素的接口
@@ -82,6 +85,8 @@
 		// 1.包含html标签
 		// 2.包括空格和换行
 
+
+
 		// 表单元素属性
 		// 1.type
 		// 2.value:表单内文字属性 非innerHTML
@@ -97,10 +102,57 @@
 		// checked = true
 
 		// 获取属性方式
-		// 1.element.属性
+		// 1.element.属性,不能获取自定义属性,不能获取变量表示的属性
 		// 2.element.getAttribute('') 此类属性可自定义（data-index）等
 		// 3.element.setAttribute('key',value)
 		// 4.element.removeAttribute('key')
+		// 5.H5规定自定义属性以'data-'开头
+		// 6.data-index=2 data-time=20
+		// H5新增获取自定义属性element.dataset.index,element.dataset.time;dataset是一个集合
+		// element.dataset['index'],element.dataset['time']
+
+
+
+		// 节点操作
+		// 1.DOM API获取,逻辑性不强,兼容性好
+		// 2.节点层次获取
+		// parentNode离元素最近的父节点,如果找不到则返回null
+		// childNodes子节点的集合NodeList,包括文本节点和标签节点(换行和空格为文本节点)
+		// node.nodeType 1:元素节点 3:文本节点
+		// children只返回标签节点(元素节点)HTMLCollection
+		// firstChild包括文本节点
+		// lastChild包括文本节点
+		// firstElementChild只返回元素节点
+		// lastElementChild只返回元素节点 IE9以上才支持
+		// children[0] children[2]
+		// 不能用children[-1]
+
+		// 兄弟节点
+		// nextSibling,previousSibling包括文本节点
+		// nextElementSibling,previousElementSibling IE9以上才支持
+
+		// 创建节点
+		// document.createElement
+		// node.appendChild//给父亲添加子节点document.body
+		// node.insertBefore(li,指定子元素)//给父亲节点指定子元素前面添加兄弟元素
+
+		// 删除节点
+		// node.removeChild(node.children[0])
+
+		// 复制节点
+		// node.cloneNode()复制node节点并返回新的节点
+		// node.cloneNode(false)不复制其中的内容或其他子节点
+		// node.cloneNode(true)深拷贝
+
+
+
+		slice()
+		splice()
+		shift()
+		unshift()
+
+
+		javascript的语言特性
 
 
 
@@ -111,16 +163,20 @@
 
 
 
+		前端优化方案
 
+		// document.documentElement.clientWidth = width + padding
+		// document.documentElement.clientHeight = height + padding
 
+		// window.innerWidth = width + padding + border + 纵向滚动条宽度
+		// window.innerHeight = height + padding + border + 横向滚动条高度
 
+		// window.outerWidth = width + padding + border + 纵向滚动条宽度
+		// window.outerHeight = height + padding + border + 横向滚动条高度 + 工具条高度
 
+		// offset返回本身的宽高 + padding + border + 滚动条
+		// https://img-blog.csdn.net/20150606173925216?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbHpkaW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center
 
-
-
-
-
-		// querySelector,getElementById区别
 
 
 		// css盒模型
