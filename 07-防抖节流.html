@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>防抖节流</title>
+	<style type="text/css">
+		html{
+			height: 500%;
+		}
+	</style>
+</head>
+<body>
+
+	<script type="text/javascript">
+		//节流
+		// 1.在一定的周期内，只让触发的第一次生效
+		function throttle(fn,delay){
+			let lastTime = 0;
+			return function(){
+				let curTime = Date.now();
+				if(curTime-lastTime > delay ){
+					fn();
+					lastTime = Date.now();
+				}
+			}
+			
+		}
+
+		// document.onscroll = throttle(function(){
+		// 	console.log("scroll"+Date.now());
+		// },1000)
+
+		//防抖 （会有延迟）
+		// 1.连续多次触发函数时，只执行最后一次触发事件,使之前的执行无效，且之前的执行非立即执行
+		function debounce(fn,delay){
+			let timer = null;
+			return function(){
+				clearTimeout(timer);
+				timer = setTimeout(function(){
+					fn();
+				},delay)
+			}		
+
+		}
+
+		document.onscroll = debounce(function(){
+			console.log("scroll"+Date.now());
+		},2000)
+	</script>
+</body>
+</html>
