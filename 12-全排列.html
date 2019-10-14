@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>字符串全排列</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//全排列，固定第一个元素，剩下的元素全排列；将第一个元素与剩下的元素交换位置，其余元素全排列
+		function Perm(s){
+			var result = [];
+			// debugger;
+			var arr = s.split('');
+			for(var i=0;i<arr.length;i++){
+				var item = arr[i];
+				result = result.concat(Perm(s.slice(0,i)).concat(item).concat(Perm(s.slice(i+1))))
+			}
+			return result;
+		}
+		// console.log(Perm('abcd'));
+		function perm(s){
+			var result = [];
+			if(s.length == 1){
+				return [s]
+			}
+			for(var i = 0; i<s.length;i++){
+				var c = s[i];//依次把第i个元素拿出来放在第一个位置
+				// var remain = s.slice(0,i)+s.slice(i+1);
+				var remain = perm(s.slice(0,i)+s.slice(i+1));
+
+				for(let j = 0; j<remain.length;j++){
+					result.push(c+remain[j])
+				}
+				console.log(c,remain,result)
+			}
+			return result
+		}
+
+		console.log(perm('abc'));
+
+
+		var nums = [1,2,3]//求数组的幂集
+
+		function subsets(nums){
+			var result = [[]];//初始子集
+			for(var num of nums){//不能用in in遍历的为索引
+				//将item添加到result的每个元素中
+				var temp =[];
+				for(var item of result){
+
+					temp.push(item.concat(num));
+				}
+				// console.log(temp)
+				result = result.concat(temp);
+			}
+			return result;
+		}
+
+		console.log(subsets(nums));
+	</script>
+</body>
+</html>

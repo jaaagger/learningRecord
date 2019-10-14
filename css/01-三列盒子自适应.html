@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		/*1.流体布局*/
+		/*.left{
+			width: 200px;
+			float: left;
+			background-color: pink;
+		}
+
+		.center{
+			margin-left: 200px;
+			margin-right: 200px;
+			background-color: purple;
+		}
+
+		.right{
+			width: 200px;
+			float: right;
+			background-color: skyblue;			
+		}*/
+
+		/*2.BFC*/
+		/*浮动不会影响其它BFC中元素的布局*/
+		/*.left{
+			width: 200px;
+			float: left;
+			background-color: pink;
+		}
+
+		.center{
+			overflow: hidden;
+			background-color: purple;
+		}
+
+		.right{
+			width: 200px;
+			float: right;
+			background-color: skyblue;			
+		}
+
+
+		/*3.双飞翼布局*/
+		/*设置其左边距为负的中间盒子的宽度
+		需要设置其左边距为负的自己的宽度*/
+		/*.content {
+	  	    float: left;
+	  	    width: 100%;
+	        }
+	    .center {
+	  	    height: 200px;
+	  	    margin-left: 110px;
+	  	    margin-right: 220px;
+	  	    background-color: green;
+	        }
+		.left {
+		    float: left;
+		    height: 200px;
+		    width: 100px;
+		    margin-left: -100%;
+		    background-color: red;
+		}
+		.right {
+		    width: 200px;
+		    height: 200px;
+		    float: right;
+		    margin-left: -200px;
+		    background-color: blue;
+		}	*/
+
+		/*5.flex布局*/
+		/*.container{
+			display: flex;
+		}
+		.left{
+			width: 200px;
+			float: left;
+			background-color: pink;
+		}
+
+		.center{
+			flex: 1;
+			background-color: purple;
+		}
+
+		.right{
+			width: 200px;
+			float: right;
+			background-color: skyblue;			
+		}*/
+
+		/*6.Table布局*/
+		/*注意width为100%，由内部元素撑开*/
+		.container{
+			display: table;
+			width: 100%;
+		}
+		.left{
+			width: 200px;
+			background-color: pink;
+			display: table-cell;
+		}
+
+		.center{
+			background-color: purple;
+			display: table-cell;
+		}
+
+		.right{
+			width: 200px;
+			background-color: skyblue;	
+			display: table-cell;		
+		}
+
+		/*7.绝对定位布局*/
+		/*.container{
+			position: relative;
+		}
+		.left{
+			width: 200px;
+			background-color: pink;
+			position: absolute;
+			left: 0px;
+
+		}
+
+		.center{
+			background-color: purple;
+			margin: 0 200px;
+		}
+
+		.right{
+			width: 200px;
+			background-color: skyblue;		
+			position: absolute;
+			right: 0px;
+		}*/
+
+	</style>
+</head>
+<body>
+	<!-- 1.流体布局 -->
+	<!-- center必须最下面，否则会自己占据一行 -->
+	<!-- <div class="left">left</div>
+	<div class="right">right</div>
+	<div class="center">center</div> -->
+
+	<!-- 2.BFC布局 -->
+	<!-- BFC区域不会与浮动元素重叠 -->
+	<!-- <div class="left">left</div>
+	<div class="right">right</div>
+	<div class="center">center</div> -->
+
+	<!-- 3.双飞翼布局 -->
+	<!-- <div class="content">
+		<div class="center">center</div>
+	</div>
+	<div class="left">left</div>
+	<div class="right">right</div> -->
+
+	<!-- 4.flex布局 -->
+	<!-- <div class="container">
+		<div class="left">left</div>
+		<div class="center">center</div>
+		<div class="right">right</div>
+		
+	</div> -->
+
+	<!-- 使用float脱离文档流时，其他盒子会无视这个元素，但其他盒子内的文本依然会为这个元素让出位置，环绕在周围(可以说是部分无视)。
+	而对于使用absolute:positioning脱离文档流的元素，其他盒子与其他盒子内的文本都会无视它。(可以说是完全无视) -->
+	<!--  -->
+
+	<!-- 6.Table布局 -->
+	<!-- center放在最后 -->
+	<div class="container">
+		<div class="left">left</div>
+		<div class="right">right</div>	
+		<div class="center">center</div>	
+	</div>
+
+	<!-- table与display:table区别 -->
+	<!-- 1.table必须在页面完全加载后才显示，没有加载完毕前，table为一片空白，也就是说，需要页面完毕才显示，而div是逐行显示，不需要页面完全加载完毕，就可以一边加载一边显示
+	2.table-layout:auto/fixed??
+	3.table tr不支持padding,tr/td不支持padding margin-->
+	
+	<!-- 6.absolute布局 -->
+	<!-- center放在最后 -->
+	<!-- <div class="container">
+		<div class="left">left</div>
+		<div class="right">right</div>	
+		<div class="center">center</div>	
+	</div> -->
+
+
+	
+</body>
+</html>

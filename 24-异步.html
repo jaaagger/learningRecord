@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>异步</title>
+</head>
+<body>
+	<script type="text/javascript">
+		//async await
+		var request = async  function(){
+			try{
+				var f1 = await readFile();//readFile返回的是promise对象
+				var f2 = await readFile();//
+			}catch(err){
+				console.log(err)
+			}
+		}
+		request();
+
+		//generator函数
+		var gen = function* (){
+			var f1 = yield readFile();
+			var f2 = yield readFile();
+		}
+	</script>
+</body>
+</html>

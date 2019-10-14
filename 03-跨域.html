@@ -10,6 +10,20 @@
     <a href="https://www.sitepoint.com/jsonp-examples/">三种跨域方案</a>
     <script>  
         //动态添加script标签，缺点 不能接收返回参数
+        // 1.首先在客户端注册一个callback方法，放到window对象上，如：
+
+        // callbackFunction (json) {
+        //     console.log(JSON)
+        // }
+        // 然后把callback的名字（callbackFunction）传给服务器。
+
+        // 2.服务器先生成 JOSN 数据。
+
+        // 3.将 JOSN 数据直接以入参的方式，放置到 function 中，这样就生成了一段 js 语法的文档（如callbackFunction(JOSN)），返回给客户端。
+
+        // 4.客户端浏览器，将返回的JS标签插入DOM，解析script标签后，会执行callbackFunction(JOSN)。
+
+        // 通过这种方式，即可实现跨域获取数据。
         var script =$('<script .>',{
             src:'./src/Server.php',
             type:'application/json',//定义请求参数为json格式
